@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doğum Günün Kutlu Olsun Melek</title>
+<style>
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:black;overflow:hidden;font-family:Arial,Helvetica,sans-serif;color:#ff2fb3}/* MATRIX */ canvas{position:fixed;top:0;left:0}
+
+/* CENTER CONTENT */ .center{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;text-align:center;z-index:2} .neon{text-shadow:0 0 8px #ff2fb3,0 0 20px #ff2fb3} .count{font-size:96px;font-weight:bold} .word{font-size:42px;font-weight:bold}
+
+/* FINAL */ #final{display:none} .heart{font-size:120px;color:white;position:relative} .heart span{position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);color:#ff2fb3;font-size:26px} .kiss{font-size:80px;margin-top:10px}
+
+/* CRT OPEN/CLOSE */ #crt{ position:fixed; top:50%;left:0; width:100%;height:2px; background:white; z-index:9999; transform:scaleY(1); } @keyframes crtOpen{from{transform:scaleY(1)}to{transform:scaleY(0)}} @keyframes crtClose{from{transform:scaleY(0)}to{transform:scaleY(1)}} .crt-open{animation:crtOpen 1s ease forwards} .crt-close{animation:crtClose 1s ease forwards} </style>
+
+</head>
+<body><!-- CRT LINE --><div id="crt"></div><!-- MATRIX --><canvas id="matrix"></canvas>
+
+<!-- CONTENT --><div class="center">
+  <div id="count" class="count neon"></div>
+  <div id="word" class="word neon"></div>
+  <div id="final">
+    <div class="heart neon">🤍<span>MELEK</span></div>
+    <div class="kiss neon">😘</div>
+  </div>
+</div><script>
+/**************** MATRIX ****************/
+const canvas=document.getElementById('matrix');
+const ctx=canvas.getContext('2d');
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize();addEventListener('resize',resize);
+const chars='DOĞUM GÜNÜN KUTLU OLSUN ';
+const size=18;
+let cols=Math.floor(canvas.width/size);
+let drops=new Array(cols).fill(1);
+function drawMatrix(){
+  ctx.fillStyle='rgba(0,0,0,0.08)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#ff2fb3';
+  ctx.font=size+'px monospace';
+  for(let i=0;i<drops.length;i++){
+    const c=chars[Math.floor(Math.random()*chars.length)];
+    ctx.fillText(c,i*size,drops[i]*size);
+    if(drops[i]*size>canvas.height) drops[i]=0;
+    drops[i]++;
+  }
+}
+setInterval(drawMatrix,33);
+
+/**************** FLOW ****************/
+const crt=document.getElementById('crt');
+const countEl=document.getElementById('count');
+const wordEl=document.getElementById('word');
+const finalEl=document.getElementById('final');
+const words=['DOĞUM','GÜNÜN','KUTLU','OLSUN','NİCE','MUTLU','SENELERE','SENİ','SEVİYORUM'];
+
+window.onload=()=>{
+  // CRT OPEN
+  crt.classList.add('crt-open');
+  setTimeout(startCountdown,1000);
+};
+
+function startCountdown(){
+  let n=3;
+  countEl.textContent=n;
+  const t=setInterval(()=>{
+    n--;
+    if(n>0){countEl.textContent=n}
+    else{
+      clearInterval(t);
+      countEl.textContent='';
+      startWords();
+    }
+  },1000);
+}
+
+function startWords(){
+  let i=0;
+  wordEl.textContent=words[i];
+  const t=setInterval(()=>{
+    i++;
+    if(i<words.length){
+      wordEl.textContent=words[i];
+    }else{
+      clearInterval(t);
+      wordEl.textContent='';
+      finalEl.style.display='block';
+      setTimeout(closeScreen,2500);
+    }
+  },900);
+}
+
+function closeScreen(){
+  canvas.style.display='none';
+  document.querySelector('.center').style.display='none';
+  crt.classList.remove('crt-open');
+  crt.classList.add('crt-close');
+}
+</script></body>
+</html><!-- README.md CONTENT FOR GITHUB --><!--
+# 🎉 Doğum Günün Kutlu Olsun MELEK 💖
+
+Bu proje, **MELEK** için hazırlanmış özel bir doğum günü web sitesidir.
+
+## ✨ Özellikler
+- Neon pembe Matrix arka plan
+- 3 → 2 → 1 geri sayım
+- Kelimelerin sırayla gösterilmesi
+- Finalde beyaz kalp 🤍 (MELEK yazılı) ve öpücük 😘
+- Açılış ve kapanışta tüplü (CRT) bilgisayar ekranı efekti
+- Mobil uyumlu (telefonu yatay tutunuz)
+
+## 📂 Dosyalar
+```
+index.html
+```
+
+## 🚀 GitHub Pages ile Yayınlama
+1. GitHub’da yeni bir repo oluştur
+2. `index.html` dosyasını yükle
+3. Repo → Settings → Pages
+4. Source: `main / root`
+5. Kaydet → çıkan linki aç 🎉
+
+## ❤️ Not
+Bu site sevgiyle hazırlanmıştır.
+-->
